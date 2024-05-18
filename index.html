@@ -1,36 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Penghitung Ceki</title>
-    <!-- Menyertakan Bootstrap CSS dari CDN -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa; /* Warna latar belakang */
-            color: #343a40; /* Warna teks */
-        }
-        .container {
-            max-width: 600px; /* Lebar maksimum konten */
-        }
-        .player-card {
-            background-color: #ffffff; /* Warna latar belakang kartu pemain */
-            border: 1px solid #ced4da; /* Garis pinggir kartu pemain */
-            margin-bottom: 10px; /* Jarak antar kartu pemain */
-            padding: 10px; /* Padding dalam kartu pemain */
-        }
-        .player-card h5 {
-            margin-bottom: 0; /* Menghilangkan margin bawah pada judul pemain */
-        }
-    </style>
-</head>
-<body class="container mt-5">
-    <h1 class="mb-4 text-center">Penghitung Ceki</h1>
-    <div id="playerList"></div>
-    <button id="tambahPlayer" class="btn btn-primary btn-block mb-3" onclick="addPlayer()">Tambah Player</button>
-    <button id="tambahSkor" class="btn btn-secondary btn-block mb-3" style="display: none;" onclick="addScore()">Tambah Skor</button>
-    <script src="main.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Penghitung Ceki</title>
+        <!-- Menyertakan Bootstrap CSS dari CDN -->
+        <link
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                background-color: #f8f9fa; /* Warna latar belakang */
+                color: #343a40; /* Warna teks */
+            }
+            .container {
+                max-width: 600px; /* Lebar maksimum konten */
+            }
+            .player-card {
+                background-color: #ffffff; /* Warna latar belakang kartu pemain */
+                border: 1px solid #ced4da; /* Garis pinggir kartu pemain */
+                margin-bottom: 10px; /* Jarak antar kartu pemain */
+                padding: 10px; /* Padding dalam kartu pemain */
+            }
+            .player-card h5 {
+                margin-bottom: 0; /* Menghilangkan margin bawah pada judul pemain */
+            }
+        </style>
+    </head>
+    <body class="container mt-5">
+        <h1 class="mb-4 text-center">Penghitung Ceki</h1>
+        <div id="playerList"></div>
+        <button
+            id="tambahPlayer"
+            class="btn btn-primary btn-block mb-3"
+            onclick="addPlayer()"
+        >
+            Tambah Player
+        </button>
+        <button
+            id="tambahSkor"
+            class="btn btn-secondary btn-block mb-3"
+            style="display: none"
+            onclick="donation()"
+        >
+            by SaniX
+        </button>
+        <script src="main.js"></script>
+    </body>
 </html>
