@@ -3,50 +3,290 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Penghitung Ceki</title>
-        <!-- Menyertakan Bootstrap CSS dari CDN -->
+        <!-- Onsen UI CSS -->
         <link
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             rel="stylesheet"
+            href="https://unpkg.com/onsenui/css/onsenui.css"
         />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/onsenui/css/onsen-css-components.css"
+        />
+        <!-- Onsen UI JS -->
+        <script src="https://unpkg.com/onsenui/js/onsenui.js"></script>
         <style>
-            body {
-                background-color: #f8f9fa; /* Warna latar belakang */
-                color: #343a40; /* Warna teks */
+            .dark-mode {
+                background-color: #222;
+                color: #fff;
             }
-            .container {
-                max-width: 600px; /* Lebar maksimum konten */
+            .dark-mode ons-toolbar {
+                background-color: #333;
             }
-            .player-card {
-                background-color: #ffffff; /* Warna latar belakang kartu pemain */
-                border: 1px solid #ced4da; /* Garis pinggir kartu pemain */
-                margin-bottom: 10px; /* Jarak antar kartu pemain */
-                padding: 10px; /* Padding dalam kartu pemain */
+            .dark-mode ons-tabbar,
+            .dark-mode ons-list,
+            .dark-mode ons-list-item {
+                background-color: #333;
+                color: #fff;
             }
-            .player-card h5 {
-                margin-bottom: 0; /* Menghilangkan margin bawah pada judul pemain */
+            .sigma-mode {
+                font-family: "Comic Sans MS", cursive, sans-serif;
             }
         </style>
     </head>
-    <body class="container mt-5">
-        <h1 class="mb-4 text-center">Penghitung Ceki</h1>
-        <div id="playerList"></div>
-        <button
-            id="tambahPlayer"
-            class="btn btn-primary btn-block mb-3"
-            onclick="addPlayer()"
-        >
-            Tambah Player
-        </button>
-        <button
-            id="tambahSkor"
-            class="btn btn-secondary btn-block mb-3"
-            style="display: none"
-            onclick="donation()"
-        >
-            by SaniX
-        </button>
-        <script src="main.js"></script>
+    <body>
+        <!-- Main Tabs -->
+        <ons-page>
+            <ons-toolbar>
+                <div class="center">Penghitung Ceki</div>
+            </ons-toolbar>
+
+            <ons-tabbar swipeable>
+                <ons-tab
+                    page="home.html"
+                    label="Home"
+                    icon="md-home"
+                    active
+                ></ons-tab>
+                <ons-tab
+                    page="settings.html"
+                    label="Settings"
+                    icon="md-settings"
+                ></ons-tab>
+                <ons-tab
+                    page="about.html"
+                    label="About"
+                    icon="md-github"
+                ></ons-tab>
+            </ons-tabbar>
+        </ons-page>
+        <!-- Main Tabs End -->
+
+        <!-- Home Page Template -->
+        <template id="home.html">
+            <ons-page id="home">
+                <div style="text-align: center; margin-top: 50px">
+                    <h1>Selamat Datang</h1>
+                    <p>Website ini masih dalam pengembangan.</p>
+                </div>
+
+                <div style="padding: 10px">
+                    <ons-list id="playerList"></ons-list>
+                    <ons-button
+                        id="tambahPlayer"
+                        modifier="large"
+                        class="mb-3"
+                        onclick="addPlayer()"
+                    >
+                        Tambah Player
+                    </ons-button>
+                </div>
+            </ons-page>
+        </template>
+
+        <!-- Settings Page Template -->
+        <template id="settings.html">
+            <ons-page id="settings">
+                <div class="listSettings" style="padding: 15px">
+                    <ons-list>
+                        <ons-list-item>
+                            Dark Mode
+                            <div class="right">
+                                <ons-switch
+                                    id="darkModeSwitch"
+                                    onchange="toggleDarkMode(this)"
+                                ></ons-switch>
+                            </div>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-list>
+                        <ons-list-item>
+                            Sigma Mode
+                            <div class="right">
+                                <ons-switch
+                                    id="sigmaModeSwitch"
+                                    onchange="toggleSigmaMode(this)"
+                                ></ons-switch>
+                            </div>
+                        </ons-list-item>
+                    </ons-list>
+                    <ons-button
+                        id="clearStorage"
+                        modifier="large"
+                        class="mb-3"
+                        onclick="clearLocalStorage()"
+                    >
+                        Clear Player
+                    </ons-button>
+                </div>
+            </ons-page>
+        </template>
+
+        <!-- About Page Template -->
+        <template id="about.html">
+            <ons-page id="about">
+                <ons-list-title>My Social Media</ons-list-title>
+                <ons-list>
+                    <ons-list-item>
+                        <div class="left">
+                            <ons-icon
+                                icon="md-github"
+                                class="list-item__icon"
+                            ></ons-icon>
+                        </div>
+                        <div class="center">Github</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="left">
+                            <ons-icon
+                                icon="md-facebook"
+                                class="list-item__icon"
+                            ></ons-icon>
+                        </div>
+                        <div class="center">Facebook</div>
+                    </ons-list-item>
+                </ons-list>
+            </ons-page>
+        </template>
+        <script>
+            // Fungsi untuk menyimpan pemain ke localStorage
+            function savePlayers(players) {
+                localStorage.setItem("players", JSON.stringify(players));
+            }
+
+            // Fungsi untuk memuat pemain dari localStorage
+            function loadPlayers() {
+                let players = localStorage.getItem("players");
+                return players ? JSON.parse(players) : [];
+            }
+
+            // Fungsi untuk memperbarui tampilan pemain
+            function updatePlayerList(players) {
+                let playerList = document.getElementById("playerList");
+                playerList.innerHTML = "";
+                players.forEach(player => {
+                    let listItem = document.createElement("ons-list-item");
+                    listItem.innerHTML = `
+                        <div class="left">${player.name} skor: <span class="score">${player.score}</span></div>
+                        <div class="right">
+                            <ons-button modifier="quiet" onclick="changeScore(this, -5)">-</ons-button>
+                            <ons-button modifier="quiet" onclick="changeScore(this, 5)">+</ons-button>
+                        </div>
+                    `;
+                    playerList.appendChild(listItem);
+                });
+            }
+
+            // Fungsi untuk menambah pemain baru
+            function addPlayer() {
+                ons.notification
+                    .prompt("Masukkan Nama Pemain")
+                    .then(function (name) {
+                        if (name) {
+                            let players = loadPlayers();
+                            players.push({ name: name, score: 0 });
+                            savePlayers(players);
+                            updatePlayerList(players);
+                        }
+                    });
+            }
+
+            // Fungsi untuk mengubah skor pemain
+            function changeScore(button, value) {
+                let listItem = button.closest("ons-list-item");
+                let scoreElement = listItem.querySelector(".score");
+                let score = parseInt(scoreElement.innerText, 10);
+                score += value;
+                scoreElement.innerText = score;
+
+                // Perbarui skor di localStorage
+                let name = listItem
+                    .querySelector(".left")
+                    .innerText.split(" skor: ")[0];
+                let players = loadPlayers();
+                let player = players.find(p => p.name === name);
+                if (player) {
+                    player.score = score;
+                    savePlayers(players);
+                }
+            }
+
+            // Fungsi untuk menghapus data localStorage
+            function clearLocalStorage() {
+                localStorage.removeItem("players");
+                updatePlayerList([]);
+            }
+
+            // Fungsi untuk mengaktifkan dark mode
+            function toggleDarkMode(switchElement) {
+                if (switchElement.checked) {
+                    document.body.classList.add("dark-mode");
+                    localStorage.setItem("darkMode", "true");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    localStorage.setItem("darkMode", "false");
+                }
+            }
+
+            // Fungsi untuk mengaktifkan sigma mode
+            function toggleSigmaMode(switchElement) {
+                if (switchElement.checked) {
+                    document.body.classList.add("sigma-mode");
+                    localStorage.setItem("sigmaMode", "true");
+                } else {
+                    document.body.classList.remove("sigma-mode");
+                    localStorage.setItem("sigmaMode", "false");
+                }
+            }
+
+            // Memuat pemain saat halaman dimuat
+            document.addEventListener("init", function (event) {
+                if (event.target.id === "home") {
+                    let players = loadPlayers();
+                    updatePlayerList(players);
+                }
+
+                if (event.target.id === "settings") {
+                    // Memuat status dark mode dari localStorage
+                    let darkMode = localStorage.getItem("darkMode") === "true";
+                    document.getElementById("darkModeSwitch").checked =
+                        darkMode;
+                    if (darkMode) {
+                        document.body.classList.add("dark-mode");
+                    }
+
+                    // Memuat status sigma mode dari localStorage
+                    let sigmaMode =
+                        localStorage.getItem("sigmaMode") === "true";
+                    document.getElementById("sigmaModeSwitch").checked =
+                        sigmaMode;
+                    if (sigmaMode) {
+                        document.body.classList.add("sigma-mode");
+                    }
+                }
+            });
+
+            // Menambahkan kelas CSS untuk dark mode dan sigma mode
+            const style = document.createElement("style");
+            style.innerHTML = `
+                .dark-mode {
+                    background-color: #222;
+                    color: #fff;
+                }
+                .dark-mode ons-toolbar {
+                    background-color: #333;
+                }
+                .dark-mode ons-tabbar,
+                .dark-mode ons-list,
+                .dark-mode ons-list-item {
+                    background-color: #333;
+                    color: #fff;
+                }
+                .sigma-mode {
+                    font-family: 'Comic Sans MS', cursive, sans-serif;
+                }
+            `;
+            document.head.appendChild(style);
+        </script>
     </body>
 </html>
