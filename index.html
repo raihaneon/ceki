@@ -40,6 +40,7 @@
                     label="About"
                     icon="md-github"
                 ></ons-tab>
+                <ons-tab page="ask.html" label="Ask" icon="md-help"></ons-tab>
             </ons-tabbar>
         </ons-page>
         <!-- Main Tabs End -->
@@ -98,6 +99,35 @@
                         <div class="center">Github</div>
                     </ons-list-item>
                 </ons-list>
+            </ons-page>
+        </template>
+
+        <template id="ask.html">
+            <ons-page id="ask">
+               
+                <div style="text-align: center; margin-top: 200px">
+                    <p>
+                        <ons-input
+                            id="username"
+                            placeholder="Username"
+                            modifier="underbar"
+                        ></ons-input>
+                    </p>
+
+                    <p>
+                        <ons-input
+                            id="password"
+                            placeholder="Password"
+                            type="password"
+                            modifier="underbar"
+                        >
+                        </ons-input>
+                    </p>
+
+                    <p>
+                        <ons-button>Sign in</ons-button>
+                    </p>
+                </div>
             </ons-page>
         </template>
         <script src="main.js"></script>
