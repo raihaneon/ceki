@@ -18,6 +18,11 @@ window.onload = function () {
             welcomeShown = true;
         }
     }
+
+    // Set initial dark mode state from localStorage
+    const darkModeEnabled = localStorage.getItem("darkModeEnabled") === "true";
+    document.body.classList.toggle("dark-mode", darkModeEnabled);
+    document.getElementById("darkModeSwitch").checked = darkModeEnabled;
 };
 
 function addPlayer() {
@@ -166,4 +171,8 @@ function clearData() {
     });
 }
 
-
+function toggleDarkMode() {
+    const darkModeEnabled = document.getElementById("darkModeSwitch").checked;
+    document.body.classList.toggle("dark-mode", darkModeEnabled);
+    localStorage.setItem("darkModeEnabled", darkModeEnabled);
+}
