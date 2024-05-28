@@ -1,4 +1,5 @@
 <!doctype html>
+<html<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -14,6 +15,20 @@
             href="https://unpkg.com/onsenui/css/onsen-css-components.min.css"
         />
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+        <style>
+            body.dark-mode {
+                background-color: #121212;
+                color: #ffffff;
+            }
+            .dark-mode ons-toolbar {
+                background-color: #333333;
+                color: #ffffff;
+            }
+            .dark-mode ons-list-item {
+                background-color: #1e1e1e;
+                color: #ffffff;
+            }
+        </style>
     </head>
 
     <body>
@@ -69,7 +84,7 @@
                             <div class="right">
                                 <ons-switch
                                     id="darkModeSwitch"
-                                    onchange="DarkMode()"
+                                    onchange="toggleDarkMode()"
                                 ></ons-switch>
                             </div>
                         </ons-list-item>
@@ -83,6 +98,7 @@
         </template>
 
         <!-- About Page Template -->
+        
         <template id="about.html">
             <ons-page id="about">
                 <ons-list-title
